@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: account-card-api-gateway
+  cloud:
+    config:
+      enabled: false
+  profiles:
+    active: local

@@ -1,0 +1,37 @@
+logging:
+  level.org.springframework.cloud: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "info, health, gateway"
+
+api-gateway:
+  services:
+    mib-account-card:
+      url: http://httpbin.org
+
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddRequestHeader=X-RequestOrigin, ps_account_card
+        - SecureHeaders
+      routes:
+        # test-post-route
+        - id: test-post-route
+          uri: ${api-gateway.services.mib-account-card.url}/post
+          predicates:
+            - Path=/post
+            - Method=POST
+        # test-get-route
+        - id: test-get-route
+          uri: ${api-gateway.services.mib-account-card.url}/get
+          predicates:
+            - Host=localhost:8080
+#            - Header=X-UserId, \d+
+            - Path=/get
+            - Method=GET
+          filters:
+#           - AddRequestHeader=X-UserId, 1234567890
