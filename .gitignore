@@ -24,6 +24,7 @@ hs_err_pid*
 
 # Binaries
 out/
+build/
 
 # Gradle files
 .gradle/
