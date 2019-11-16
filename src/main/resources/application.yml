@@ -1,37 +1,32 @@
-logging:
-  level.org.springframework.cloud: DEBUG
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "info, health, gateway"
-
-api-gateway:
-  services:
-    mib-account-card:
-      url: http://httpbin.org
-
 spring:
   cloud:
     gateway:
       default-filters:
-        - AddRequestHeader=X-RequestOrigin, ps_account_card
+        # Add request header
+        - AddRequestHeader=X-RequestOrigin, MyReactiveApiGateway
+        # Add filter to log request and response
+        - LogFilter
+        # Add secure headers
         - SecureHeaders
       routes:
-        # test-post-route
-        - id: test-post-route
-          uri: ${api-gateway.services.mib-account-card.url}/post
+        # route testing a POST request only with restrictions
+        - id: post-route
+          uri: http://httpbin.org/post
           predicates:
             - Path=/post
             - Method=POST
-        # test-get-route
-        - id: test-get-route
-          uri: ${api-gateway.services.mib-account-card.url}/get
+        # route testing a GET request with restrictions and filters
+        - id: get-route
+          uri: http://httpbin.org/get
           predicates:
+            # Only accept requests from host localhost
             - Host=localhost:8080
-#            - Header=X-UserId, \d+
+            # Only accept requests with header key equal "X-UserId" and with numeric values
+            - Header=X-UserId, \d+
+            # Only accept requests with resource path equal "/get"
             - Path=/get
+            # Only accept requests GET requests
             - Method=GET
           filters:
-#           - AddRequestHeader=X-UserId, 1234567890
+            # Filter to add request header key "X-UserId" and value equal "1234567890"
+            - AddRequestHeader=X-UserId, 1234567890
