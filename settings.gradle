@@ -3,4 +3,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'api-gateway'
+rootProject.name = 'reactive-api-gateway-sample'
