@@ -7,7 +7,7 @@ General project configurations such as Circuitbreaker and among many others poss
 
 ## Filters
 Filters can intercept a request from the gateway allowing you to manage this call before or after being redirected to the destination api. Examples of filters would be, for example, security filters, log and within several others.
-- see example: [configuration class](src/main/java/com/dassuncao/reactive/api/gateway/filters/LogFilter.java)
+- see example: [filter class](src/main/java/com/dassuncao/reactive/api/gateway/filters/LogFilter.java)
 
 ## Route Configuration Pattern
 This gateway implementation is configuration-oriented allowing management of all routes with the application running using the config-server.
